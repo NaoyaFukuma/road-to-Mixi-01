@@ -50,8 +50,8 @@ services:
       - ./mysql/my.cnf:/etc/mysql/my.cnf
       - ./mysql/conf.d/mysql.cnf:/etc/mysql/conf.d/mysql.cnf
       - ./mysql/0_init.sql:/docker-entrypoint-initdb.d/0_init.sql
-      # - ./mysql/2_insert_users.sql:/docker-entrypoint-initdb.d/2_insert_users.sql
-      # - ./mysql/3_insert_friend_block.sql:/docker-entrypoint-initdb.d/3_insert_friend_block.sql
+      - ./mysql/1_insert_users.sql:/docker-entrypoint-initdb.d/2_insert_users.sql
+      - ./mysql/2_insert_friend_block.sql:/docker-entrypoint-initdb.d/3_insert_friend_block.sql
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: yes
       MYSQL_DATABASE: app

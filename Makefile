@@ -15,6 +15,11 @@ all:
 up-logs:
 	docker compose -p $(NAME) up
 
+# コンテナのログをストリーミング出力
+.PHONY: logs
+logs:
+	docker compose -p $(NAME) logs -f
+
 # コンテナを停止
 .PHONY: stop
 stop:

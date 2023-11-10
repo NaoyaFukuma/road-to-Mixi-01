@@ -25,6 +25,9 @@ type DBConfig struct {
 	DataSource string `default:"root:@(db:3306)/app"`
 }
 
+const apiVersion = "v1"
+const ApiPrefix = "/minimal_sns_api/" + apiVersion
+
 func Get() Config {
 	once.Do(func() {
 		if err := envconfig.Process("server", &conf.Server); err != nil {

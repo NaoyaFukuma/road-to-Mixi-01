@@ -24,11 +24,18 @@ func main() {
 	defer db.Close()
 
 	e := echo.New()
+	e.GET("/", func(c echo.Context) error {
+		return c.String(200, "I'm alive!")
+	})
+	e.Use(logutils.RequestLoggerMiddleware)
 
 	friendRepo := repository.NewFriendRepository(db)
 	friendHandler := handlers.NewFriendHandler(friendRepo)
-
 	friendHandler.RegisterRoutes(e)
+
+	userRepo := repository.NewUserRepository(db)
+	userHandler := handlers.NewUserHandler(userRepo)
+	userHandler.RegisterRoutes(e)
 
 	e.Logger.Fatal(e.Start(":" + strconv.Itoa(conf.Server.Port)))
 }

@@ -1,8 +1,11 @@
 package logutils
 
 import (
+	"fmt"
 	"log"
 	"os"
+
+	"github.com/labstack/echo/v4"
 )
 
 const (
@@ -37,4 +40,14 @@ func Warning(msg string) {
 // Error logs a message at the error severity level.
 func Error(msg string) {
 	log.Print(ErrorColor, "ERROR: "+ResetColor+msg)
+}
+
+func RequestLoggerMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		req := c.Request()
+		logmsg := fmt.Sprintf(
+			"Recived request\nmethod: %s\nuri: %s\n headers: %s\nremote_addr%s", req.Method, req.RequestURI, req.Header, req.RemoteAddr)
+		Info(logmsg)
+		return next(c)
+	}
 }
